@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "incremental": true,
+        "target": "es2017",
+        "module": "commonjs",
+        "esModuleInterop": true,
+        "outDir": "build/",
+        "strict": true,
+        "sourceMap": true,
+        "types": ["node", "@wdio/sync", "@wdio/mocha-framework"]
+    },
+    "include": [
+        "**/*",
+        "../studio/shared/*"
+    ]
+}
