@@ -24,7 +24,7 @@
     "@wdio/selenium-standalone-service": "^5.16.10",
     "@wdio/spec-reporter": "^5.15.2",
     "@wdio/sync": "^5.15.7",
-    "chromedriver": "^80.0.1",
+    "chromedriver": "^83.0.0",
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
     "ts-node": "^8.4.1",
