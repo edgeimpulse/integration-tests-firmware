@@ -3,7 +3,7 @@ export class Notify {
         if ($('.swal2-container').isExisting()) {
             browser.waitUntil(() => {
                 return $('.swal2-container').isDisplayed();
-            }, 1000);
+            }, { timeout: 1000 });
         }
         return $('.swal2-container').isDisplayed();
     }
@@ -18,7 +18,7 @@ export class Notify {
         $('.swal2-confirm').click();
         browser.waitUntil(() => {
             return !$('#' + containerId).isDisplayed();
-        }, 15000);
+        }, { timeout: 15000 });
     }
 
     static sendAlertText(msg: string) {

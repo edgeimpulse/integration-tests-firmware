@@ -29,7 +29,7 @@ This contains device integration tests for the Edge Impulse [remote management](
         EI_TESTWIFI=1 \
         SELENIUM_WIFI_SSID="xxx" \
         SELENIUM_WIFI_PASSWORD="xxx" \
-        ./node_modules/.bin/wdio wdio.headless.conf.js
+        ./node_modules/.bin/wdio wdio.headless.chrome.js
     ```
 
     With these options:
@@ -131,3 +131,19 @@ This contains device integration tests for the Edge Impulse [remote management](
 
     Spec Files:      1 passed, 1 total (100% completed) in 00:01:30
     ```
+
+### Using Firefox
+
+The default driver is Chrome, but you can also use Firefox via:
+
+```
+./node_modules/typescript/bin/tsc -p . && \
+    EI_USERNAME="xxx" \
+    EI_PASSWORD="xxx" \
+    EI_PROJECTNAME="xxx" \
+    EI_HMACKEY="xxx" \
+    EI_TESTWIFI=1 \
+    SELENIUM_WIFI_SSID="xxx" \
+    SELENIUM_WIFI_PASSWORD="xxx" \
+    ./node_modules/.bin/wdio wdio.headless.firefox.js
+```

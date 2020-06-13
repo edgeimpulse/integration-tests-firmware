@@ -126,8 +126,10 @@ describe('device integration', () => {
                     clearedConfig = true;
                 });
 
-                browser.waitUntil(() => clearedConfig, 20000, 'Failed to clear config: ' +
-                    dataCache);
+                browser.waitUntil(() => clearedConfig, {
+                    timeout: 20000,
+                    timeoutMsg: 'Failed to clear config: ' + dataCache
+                });
 
                 // check that there are no devices connected
                 assert(typeof studioUrl !== 'undefined', 'studioUrl should not be empty');
@@ -135,7 +137,10 @@ describe('device integration', () => {
 
                 browser.waitUntil(() => {
                     return $$('.device-remote-mgmt i.bg-success').length === 0;
-                }, 30000, 'device should have disconnected');
+                }, {
+                    timeout: 30000,
+                    timeoutMsg: 'device should have disconnected'
+                });
 
                 assert.equal(
                     $$('.device-remote-mgmt i.bg-success').length,
@@ -158,7 +163,10 @@ describe('device integration', () => {
                     connected = true;
                 });
 
-                browser.waitUntil(() => connected, 20000, 'Failed to connect: ' + dataCache);
+                browser.waitUntil(() => connected, {
+                    timeout: 20000,
+                    timeoutMsg: 'Failed to connect: ' + dataCache
+                });
 
                 assert(clearedConfig, 'cleared config: ' + dataCache);
                 assert(connected, 'cleared config: ' + dataCache);
@@ -179,7 +187,8 @@ describe('device integration', () => {
                     assert(studioUrl, 'studioUrl should not be empty');
                     browser.url(studioUrl + 'acquisition/training');
 
-                    browser.waitUntil(() => $$('#input-sample-sensor option').length === 2, 2000);
+                    browser.waitUntil(() => $$('#input-sample-sensor option').length === 2,
+                        { timeout: 2000 });
 
                     assert.equal($$('#input-sample-sensor option').length, 2);
 
@@ -193,20 +202,23 @@ describe('device integration', () => {
 
                     $('#input-start-sampling').click();
 
-                    browser.waitUntil(() => $('#input-start-sampling').getText() === 'Starting...', 10000);
-                    browser.waitUntil(() => $('#input-start-sampling').getText() === 'Waiting to start...', 10000);
-                    browser.waitUntil(() => $('#input-start-sampling').getText() === 'Sampling... (1s left)', 10000);
+                    browser.waitUntil(() => $('#input-start-sampling').getText() === 'Starting...',
+                        { timeout: 10000 });
+                    browser.waitUntil(() => $('#input-start-sampling').getText() === 'Waiting to start...',
+                        { timeout: 10000 });
+                    browser.waitUntil(() => $('#input-start-sampling').getText() === 'Sampling... (1s left)',
+                        { timeout: 10000 });
                     assert.notEqual($('#input-start-sampling').getAttribute('class').indexOf('disabled'), -1);
                     assert.equal(Notify.isAlertOpen(), false);
 
                     // wait until visible in EI studio
                     browser.waitUntil(() => {
                         return $('td*=' + label).isExisting();
-                    }, 30000);
+                    }, { timeout: 30000 });
 
                     browser.waitUntil(() => {
                         return $('#input-start-sampling').getAttribute('class').indexOf('disabled') === -1;
-                     }, 15000);
+                     }, { timeout: 15000 });
                 });
 
                 it('has correct label', () => {
@@ -244,7 +256,10 @@ describe('device integration', () => {
 
                     browser.waitUntil(() => {
                         return $('td*=' + label).isExisting() === false;
-                    }, 15000, label + ' should be deleted by JS');
+                    }, {
+                        timeout: 15000,
+                        timeoutMsg: label + ' should be deleted by JS'
+                    });
 
                     browser.navigateTo(browser.getUrl());
 
@@ -258,7 +273,8 @@ describe('device integration', () => {
                     assert(studioUrl, 'studioUrl should not be empty');
                     browser.url(studioUrl + 'acquisition/testing');
 
-                    browser.waitUntil(() => $$('#input-sample-sensor option').length === 2, 2000);
+                    browser.waitUntil(() => $$('#input-sample-sensor option').length === 2,
+                        { timeout:  2000 });
 
                     assert.equal($$('#input-sample-sensor option').length, 2);
 
@@ -272,20 +288,23 @@ describe('device integration', () => {
 
                     $('#input-start-sampling').click();
 
-                    browser.waitUntil(() => $('#input-start-sampling').getText() === 'Starting...', 10000);
-                    browser.waitUntil(() => $('#input-start-sampling').getText() === 'Waiting to start...', 10000);
-                    browser.waitUntil(() => $('#input-start-sampling').getText() === 'Sampling... (1s left)', 10000);
+                    browser.waitUntil(() => $('#input-start-sampling').getText() === 'Starting...',
+                        { timeout: 10000 });
+                    browser.waitUntil(() => $('#input-start-sampling').getText() === 'Waiting to start...',
+                        { timeout: 10000 });
+                    browser.waitUntil(() => $('#input-start-sampling').getText() === 'Sampling... (1s left)',
+                        { timeout: 10000 });
                     assert.notEqual($('#input-start-sampling').getAttribute('class').indexOf('disabled'), -1);
                     assert.equal(Notify.isAlertOpen(), false);
 
                     // wait until visible in EI studio
                     browser.waitUntil(() => {
                         return $('td*=' + label).isExisting();
-                    }, 30000);
+                    }, { timeout: 30000 });
 
                     browser.waitUntil(() => {
                         return $('#input-start-sampling').getAttribute('class').indexOf('disabled') === -1;
-                     }, 15000);
+                     }, { timeout: 15000 });
                 });
 
                 it('has correct label', () => {
@@ -323,7 +342,10 @@ describe('device integration', () => {
 
                     browser.waitUntil(() => {
                         return $('td*=' + label).isExisting() === false;
-                    }, 15000, label + ' should be deleted by JS');
+                    }, {
+                        timeout: 15000,
+                        timeoutMsg: label + ' should be deleted by JS'
+                    });
 
                     browser.navigateTo(browser.getUrl());
 
@@ -348,20 +370,23 @@ describe('device integration', () => {
 
                     $('#input-start-sampling').click();
 
-                    browser.waitUntil(() => $('#input-start-sampling').getText() === 'Starting...', 10000);
-                    browser.waitUntil(() => $('#input-start-sampling').getText() === 'Waiting to start...', 10000);
-                    browser.waitUntil(() => $('#input-start-sampling').getText() === 'Sampling... (1s left)', 10000);
+                    browser.waitUntil(() => $('#input-start-sampling').getText() === 'Starting...',
+                        { timeout: 10000 });
+                    browser.waitUntil(() => $('#input-start-sampling').getText() === 'Waiting to start...',
+                        { timeout: 10000 });
+                    browser.waitUntil(() => $('#input-start-sampling').getText() === 'Sampling... (1s left)',
+                        { timeout: 10000 });
                     assert.notEqual($('#input-start-sampling').getAttribute('class').indexOf('disabled'), -1);
                     assert.equal(Notify.isAlertOpen(), false);
 
                     // wait until visible in EI studio
                     browser.waitUntil(() => {
                         return $('td*=' + label).isExisting();
-                    }, 30000);
+                    }, { timeout: 30000 });
 
                     browser.waitUntil(() => {
                         return $('#input-start-sampling').getAttribute('class').indexOf('disabled') === -1;
-                     }, 15000);
+                     }, { timeout: 15000 });
                 });
 
                 it('has correct label', () => {
@@ -399,7 +424,10 @@ describe('device integration', () => {
 
                     browser.waitUntil(() => {
                         return $('td*=' + label).isExisting() === false;
-                    }, 15000, label + ' should be deleted by JS');
+                    }, {
+                        timeout: 15000,
+                        timeoutMsg: label + ' should be deleted by JS'
+                    });
 
                     browser.navigateTo(browser.getUrl());
 
@@ -422,20 +450,23 @@ describe('device integration', () => {
 
                     $('#input-start-sampling').click();
 
-                    browser.waitUntil(() => $('#input-start-sampling').getText() === 'Starting...', 10000);
-                    browser.waitUntil(() => $('#input-start-sampling').getText() === 'Waiting to start...', 10000);
-                    browser.waitUntil(() => $('#input-start-sampling').getText() === 'Sampling... (1s left)', 10000);
+                    browser.waitUntil(() => $('#input-start-sampling').getText() === 'Starting...',
+                        { timeout: 10000 });
+                    browser.waitUntil(() => $('#input-start-sampling').getText() === 'Waiting to start...',
+                        { timeout: 10000 });
+                    browser.waitUntil(() => $('#input-start-sampling').getText() === 'Sampling... (1s left)',
+                        { timeout: 10000 });
                     assert.notEqual($('#input-start-sampling').getAttribute('class').indexOf('disabled'), -1);
                     assert.equal(Notify.isAlertOpen(), false);
 
                     // wait until visible in EI studio
                     browser.waitUntil(() => {
                         return $('td*=' + label).isExisting();
-                    }, 30000);
+                    }, { timeout: 30000 });
 
                     browser.waitUntil(() => {
                         return $('#input-start-sampling').getAttribute('class').indexOf('disabled') === -1;
-                     }, 15000);
+                     }, { timeout: 15000 });
                 });
 
                 it('has correct label', () => {
@@ -473,7 +504,10 @@ describe('device integration', () => {
 
                     browser.waitUntil(() => {
                         return $('td*=' + label).isExisting() === false;
-                    }, 15000, label + ' should be deleted by JS');
+                    }, {
+                        timeout: 15000,
+                        timeoutMsg: label + ' should be deleted by JS'
+                    });
 
                     browser.navigateTo(browser.getUrl());
 
@@ -571,8 +605,10 @@ describe('device integration', () => {
                     clearedConfig = true;
                 });
 
-                browser.waitUntil(() => clearedConfig, 20000, 'Failed to clear config: ' +
-                    dataCache);
+                browser.waitUntil(() => clearedConfig, {
+                    timeout: 20000,
+                    timeoutMsg: 'Failed to clear config: ' + dataCache
+                });
 
                 // check that there are no devices connected
                 assert(typeof studioUrl !== 'undefined', 'studioUrl should not be empty');
@@ -580,7 +616,10 @@ describe('device integration', () => {
 
                 browser.waitUntil(() => {
                     return $$('.device-remote-mgmt i.bg-success').length === 0;
-                }, 30000, 'device should have disconnected');
+                }, {
+                    timeout: 30000,
+                    timeoutMsg: 'device should have disconnected'
+                });
 
                 assert.equal(
                     $$('.device-remote-mgmt i.bg-success').length,
@@ -616,7 +655,10 @@ describe('device integration', () => {
                     connected = true;
                 });
 
-                browser.waitUntil(() => connected, 20000, 'Failed to connect: ' + dataCache);
+                browser.waitUntil(() => connected, {
+                    timeout: 20000,
+                    timeoutMsg: 'Failed to connect: ' + dataCache
+                });
 
                 assert(clearedConfig, 'cleared config: ' + dataCache);
                 assert(connected, 'cleared config: ' + dataCache);
@@ -637,7 +679,8 @@ describe('device integration', () => {
                     assert(studioUrl, 'studioUrl should not be empty');
                     browser.url(studioUrl + 'acquisition/training');
 
-                    browser.waitUntil(() => $$('#input-sample-sensor option').length === 2, 2000);
+                    browser.waitUntil(() => $$('#input-sample-sensor option').length === 2,
+                        { timeout: 2000 });
 
                     assert.equal($$('#input-sample-sensor option').length, 2);
 
@@ -651,20 +694,23 @@ describe('device integration', () => {
 
                     $('#input-start-sampling').click();
 
-                    browser.waitUntil(() => $('#input-start-sampling').getText() === 'Starting...', 10000);
-                    browser.waitUntil(() => $('#input-start-sampling').getText() === 'Waiting to start...', 10000);
-                    browser.waitUntil(() => $('#input-start-sampling').getText() === 'Sampling... (1s left)', 10000);
+                    browser.waitUntil(() => $('#input-start-sampling').getText() === 'Starting...',
+                        { timeout: 10000 });
+                    browser.waitUntil(() => $('#input-start-sampling').getText() === 'Waiting to start...',
+                        { timeout: 10000 });
+                    browser.waitUntil(() => $('#input-start-sampling').getText() === 'Sampling... (1s left)',
+                        { timeout: 10000 });
                     assert.notEqual($('#input-start-sampling').getAttribute('class').indexOf('disabled'), -1);
                     assert.equal(Notify.isAlertOpen(), false);
 
                     // wait until visible in EI studio
                     browser.waitUntil(() => {
                         return $('td*=' + label).isExisting();
-                    }, 30000);
+                    }, { timeout: 30000 });
 
                     browser.waitUntil(() => {
                         return $('#input-start-sampling').getAttribute('class').indexOf('disabled') === -1;
-                     }, 15000);
+                     }, { timeout: 15000 });
                 });
 
                 it('has correct label', () => {
@@ -702,7 +748,10 @@ describe('device integration', () => {
 
                     browser.waitUntil(() => {
                         return $('td*=' + label).isExisting() === false;
-                    }, 15000, label + ' should be deleted by JS');
+                    }, {
+                        timeout: 15000,
+                        timeoutMsg: label + ' should be deleted by JS'
+                    });
 
                     browser.navigateTo(browser.getUrl());
 
@@ -716,7 +765,8 @@ describe('device integration', () => {
                     assert(studioUrl, 'studioUrl should not be empty');
                     browser.url(studioUrl + 'acquisition/testing');
 
-                    browser.waitUntil(() => $$('#input-sample-sensor option').length === 2, 2000);
+                    browser.waitUntil(() => $$('#input-sample-sensor option').length === 2,
+                        { timeout: 2000 });
 
                     assert.equal($$('#input-sample-sensor option').length, 2);
 
@@ -730,20 +780,23 @@ describe('device integration', () => {
 
                     $('#input-start-sampling').click();
 
-                    browser.waitUntil(() => $('#input-start-sampling').getText() === 'Starting...', 10000);
-                    browser.waitUntil(() => $('#input-start-sampling').getText() === 'Waiting to start...', 10000);
-                    browser.waitUntil(() => $('#input-start-sampling').getText() === 'Sampling... (1s left)', 10000);
+                    browser.waitUntil(() => $('#input-start-sampling').getText() === 'Starting...',
+                        { timeout: 10000 });
+                    browser.waitUntil(() => $('#input-start-sampling').getText() === 'Waiting to start...',
+                        { timeout: 10000 });
+                    browser.waitUntil(() => $('#input-start-sampling').getText() === 'Sampling... (1s left)',
+                        { timeout: 10000 });
                     assert.notEqual($('#input-start-sampling').getAttribute('class').indexOf('disabled'), -1);
                     assert.equal(Notify.isAlertOpen(), false);
 
                     // wait until visible in EI studio
                     browser.waitUntil(() => {
                         return $('td*=' + label).isExisting();
-                    }, 30000);
+                    }, { timeout: 30000 });
 
                     browser.waitUntil(() => {
                         return $('#input-start-sampling').getAttribute('class').indexOf('disabled') === -1;
-                     }, 15000);
+                     }, { timeout: 15000 });
                 });
 
                 it('has correct label', () => {
@@ -781,7 +834,10 @@ describe('device integration', () => {
 
                     browser.waitUntil(() => {
                         return $('td*=' + label).isExisting() === false;
-                    }, 15000, label + ' should be deleted by JS');
+                    }, {
+                        timeout: 15000,
+                        timeoutMsg: label + ' should be deleted by JS'
+                    });
 
                     browser.navigateTo(browser.getUrl());
 
@@ -806,20 +862,23 @@ describe('device integration', () => {
 
                     $('#input-start-sampling').click();
 
-                    browser.waitUntil(() => $('#input-start-sampling').getText() === 'Starting...', 10000);
-                    browser.waitUntil(() => $('#input-start-sampling').getText() === 'Waiting to start...', 10000);
-                    browser.waitUntil(() => $('#input-start-sampling').getText() === 'Sampling... (1s left)', 10000);
+                    browser.waitUntil(() => $('#input-start-sampling').getText() === 'Starting...',
+                        { timeout: 10000 });
+                    browser.waitUntil(() => $('#input-start-sampling').getText() === 'Waiting to start...',
+                        { timeout: 10000 });
+                    browser.waitUntil(() => $('#input-start-sampling').getText() === 'Sampling... (1s left)',
+                        { timeout: 10000 });
                     assert.notEqual($('#input-start-sampling').getAttribute('class').indexOf('disabled'), -1);
                     assert.equal(Notify.isAlertOpen(), false);
 
                     // wait until visible in EI studio
                     browser.waitUntil(() => {
                         return $('td*=' + label).isExisting();
-                    }, 30000);
+                    }, { timeout: 30000 });
 
                     browser.waitUntil(() => {
                         return $('#input-start-sampling').getAttribute('class').indexOf('disabled') === -1;
-                     }, 15000);
+                     }, { timeout: 15000 });
                 });
 
                 it('has correct label', () => {
@@ -857,7 +916,10 @@ describe('device integration', () => {
 
                     browser.waitUntil(() => {
                         return $('td*=' + label).isExisting() === false;
-                    }, 15000, label + ' should be deleted by JS');
+                    }, {
+                        timeout: 15000,
+                        timeoutMsg: label + ' should be deleted by JS'
+                    });
 
                     browser.navigateTo(browser.getUrl());
 
@@ -880,20 +942,23 @@ describe('device integration', () => {
 
                     $('#input-start-sampling').click();
 
-                    browser.waitUntil(() => $('#input-start-sampling').getText() === 'Starting...', 10000);
-                    browser.waitUntil(() => $('#input-start-sampling').getText() === 'Waiting to start...', 10000);
-                    browser.waitUntil(() => $('#input-start-sampling').getText() === 'Sampling... (1s left)', 10000);
+                    browser.waitUntil(() => $('#input-start-sampling').getText() === 'Starting...',
+                        { timeout: 10000 });
+                    browser.waitUntil(() => $('#input-start-sampling').getText() === 'Waiting to start...',
+                        { timeout: 10000 });
+                    browser.waitUntil(() => $('#input-start-sampling').getText() === 'Sampling... (1s left)',
+                        { timeout: 10000 });
                     assert.notEqual($('#input-start-sampling').getAttribute('class').indexOf('disabled'), -1);
                     assert.equal(Notify.isAlertOpen(), false);
 
                     // wait until visible in EI studio
                     browser.waitUntil(() => {
                         return $('td*=' + label).isExisting();
-                    }, 30000);
+                    }, { timeout: 30000 });
 
                     browser.waitUntil(() => {
                         return $('#input-start-sampling').getAttribute('class').indexOf('disabled') === -1;
-                     }, 15000);
+                     }, { timeout: 15000 });
                 });
 
                 it('has correct label', () => {
@@ -931,7 +996,10 @@ describe('device integration', () => {
 
                     browser.waitUntil(() => {
                         return $('td*=' + label).isExisting() === false;
-                    }, 15000, label + ' should be deleted by JS');
+                    }, {
+                        timeout: 15000,
+                        timeoutMsg: label + ' should be deleted by JS'
+                    });
 
                     browser.navigateTo(browser.getUrl());
 

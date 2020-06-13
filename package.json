@@ -18,13 +18,14 @@
   },
   "homepage": "https://github.com/edgeimpulse/integration-tests-firmware#readme",
   "dependencies": {
-    "@wdio/cli": "^5.15.6",
-    "@wdio/local-runner": "^5.15.6",
-    "@wdio/mocha-framework": "^5.15.1",
-    "@wdio/selenium-standalone-service": "^5.16.10",
-    "@wdio/spec-reporter": "^5.15.2",
-    "@wdio/sync": "^5.15.7",
+    "@wdio/cli": "^6.1.17",
+    "@wdio/local-runner": "^6.1.17",
+    "@wdio/mocha-framework": "^6.1.17",
+    "@wdio/selenium-standalone-service": "^6.1.14",
+    "@wdio/spec-reporter": "^6.1.14",
+    "@wdio/sync": "^6.1.14",
     "chromedriver": "^83.0.0",
+    "geckodriver": "^1.19.1",
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
     "ts-node": "^8.4.1",
@@ -32,7 +33,9 @@
     "tslint": "^5.20.0",
     "typescript": "^3.9.2",
     "unzipper": "^0.10.8",
-    "wdio-chromedriver-service": "^5.0.2",
+    "wdio-chromedriver-service": "^6.0.3",
+    "wdio-geckodriver-service": "^1.0.3",
+    "webdriverio": "^6.1.17",
     "ws": "^7.2.0"
   },
   "devDependencies": {
@@ -42,7 +45,6 @@
     "@types/request-promise": "^4.1.44",
     "@types/tar-stream": "^2.1.0",
     "@types/unzipper": "^0.10.1",
-    "@types/webdriverio": "^5.0.0",
     "@types/ws": "^6.0.3"
   }
 }
