@@ -107,7 +107,7 @@ describe('device integration', () => {
                 });
 
                 waitForLine('What is your password?', () => {
-                    childProcess.stdin.write('PF8wPcSSp9DGcKEy\n');
+                    childProcess.stdin.write(process.env.EI_PASSWORD + '\n');
                 });
 
                 waitForLine('Failed to connect to', (data) => {
@@ -586,7 +586,7 @@ describe('device integration', () => {
                 });
 
                 waitForLine('What is your password?', () => {
-                    childProcess.stdin.write('PF8wPcSSp9DGcKEy\n');
+                    childProcess.stdin.write(process.env.EI_PASSWORD + '\n');
                 });
 
                 waitForLine('Failed to connect to', (data) => {
