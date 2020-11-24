@@ -43,7 +43,7 @@ describe('device integration', () => {
             assert.equal(/^\/studio\/(\d+)\/?$/.test(browser.getUrl().replace(STUDIO_ENDPOINT, '')), true,
                 'redirected to dashboard (' + browser.getUrl() + ')');
 
-            assert.equal($('h1=' + process.env.EI_PROJECTNAME).isExisting(), true,
+            assert.equal($('h1*=' + process.env.EI_PROJECTNAME).isExisting(), true,
                 'project title present');
 
             studioUrl = browser.getUrl();
