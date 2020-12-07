@@ -8,6 +8,11 @@ const STUDIO_ENDPOINT = 'https://studio.' + HOSTNAME;
 describe('device integration', () => {
     let studioUrl: string;
     let projectId: number;
+    let accelerometer = false;
+    let microphone = false;
+    let expectedSensorCount = 0;
+    let accelerometerName = 'Built-in accelerometer';
+    let microphoneName = 'Built-in microphone';
 
     describe('environment variables', () => {
         it('should have EI_USERNAME set', () => {
@@ -24,6 +29,20 @@ describe('device integration', () => {
         });
         it('should have EI_TESTWIFI set', () => {
             assert.notEqual(typeof process.env.EI_TESTWIFI, 'undefined', 'EI_TESTWIFI should be set');
+        });
+        it('detects sensors', () => {
+            accelerometer = process.env.TEST_ACCELEROMETER === '1';
+            microphone = process.env.TEST_MICROPHONE === '1';
+
+            if (accelerometer) expectedSensorCount++;
+            if (microphone) expectedSensorCount++;
+
+            if (process.env.ACCELEROMETER_SENSOR_NAME) {
+                accelerometerName = process.env.ACCELEROMETER_SENSOR_NAME;
+            }
+            if (process.env.MICROPHONE_SENSOR_NAME) {
+                microphoneName = process.env.MICROPHONE_SENSOR_NAME;
+            }
         });
     });
 
@@ -159,7 +178,7 @@ describe('device integration', () => {
                     childProcess.stdin.write('n\n');
                 });
 
-                waitForLine('Authenticated', () => {
+                waitForLine('is now connected to project', () => {
                     connected = true;
                 });
 
@@ -182,20 +201,24 @@ describe('device integration', () => {
         });
 
         describe('accelerometer', () => {
+            before(function() {
+                if (!accelerometer) {
+                    this.skip();
+                }
+            });
+
             describe('training data', () => {
                 it('shows data posted by the ingestion API', () => {
                     assert(studioUrl, 'studioUrl should not be empty');
                     browser.url(studioUrl + 'acquisition/training');
 
-                    browser.waitUntil(() => $$('#input-sample-sensor option').length === 2,
+                    browser.waitUntil(() => $$('#input-sample-sensor option').length >= expectedSensorCount,
                         { timeout: 2000 });
-
-                    assert.equal($$('#input-sample-sensor option').length, 2);
 
                     $('#input-category').setValue(label);
                     $('#input-sample-length').setValue(1000);
                     $('#input-sample-sensor').click();
-                    $('option=Built-in accelerometer').click();
+                    $('option=' + accelerometerName).click();
 
                     $('#input-sample-frequency').click();
                     $('option=62.5Hz').click();
@@ -273,15 +296,13 @@ describe('device integration', () => {
                     assert(studioUrl, 'studioUrl should not be empty');
                     browser.url(studioUrl + 'acquisition/testing');
 
-                    browser.waitUntil(() => $$('#input-sample-sensor option').length === 2,
+                    browser.waitUntil(() => $$('#input-sample-sensor option').length >= expectedSensorCount,
                         { timeout:  2000 });
-
-                    assert.equal($$('#input-sample-sensor option').length, 2);
 
                     $('#input-category').setValue(label);
                     $('#input-sample-length').setValue(1000);
                     $('#input-sample-sensor').click();
-                    $('option=Built-in accelerometer').click();
+                    $('option=' + accelerometerName).click();
 
                     $('#input-sample-frequency').click();
                     $('option=62.5Hz').click();
@@ -356,6 +377,12 @@ describe('device integration', () => {
         });
 
         describe('microphone', () => {
+            before(function() {
+                if (!microphone) {
+                    this.skip();
+                }
+            });
+
             describe('training data', () => {
                 it('shows data posted by the ingestion API', () => {
                     assert(studioUrl, 'studioUrl should not be empty');
@@ -366,7 +393,7 @@ describe('device integration', () => {
                     $('#input-category').setValue(label);
                     $('#input-sample-length').setValue(1000);
                     $('#input-sample-sensor').click();
-                    $('option=Built-in microphone').click();
+                    $('option=' + microphoneName).click();
 
                     $('#input-start-sampling').click();
 
@@ -446,7 +473,7 @@ describe('device integration', () => {
                     $('#input-category').setValue(label);
                     $('#input-sample-length').setValue(1000);
                     $('#input-sample-sensor').click();
-                    $('option=Built-in microphone').click();
+                    $('option=' + microphoneName).click();
 
                     $('#input-start-sampling').click();
 
@@ -674,20 +701,24 @@ describe('device integration', () => {
         });
 
         describe('accelerometer', () => {
+            before(function() {
+                if (!accelerometer) {
+                    this.skip();
+                }
+            });
+
             describe('training data', () => {
                 it('shows data posted by the ingestion API', () => {
                     assert(studioUrl, 'studioUrl should not be empty');
                     browser.url(studioUrl + 'acquisition/training');
 
-                    browser.waitUntil(() => $$('#input-sample-sensor option').length === 2,
+                    browser.waitUntil(() => $$('#input-sample-sensor option').length >= expectedSensorCount,
                         { timeout: 2000 });
-
-                    assert.equal($$('#input-sample-sensor option').length, 2);
 
                     $('#input-category').setValue(label);
                     $('#input-sample-length').setValue(1000);
                     $('#input-sample-sensor').click();
-                    $('option=Built-in accelerometer').click();
+                    $('option=' + accelerometerName).click();
 
                     $('#input-sample-frequency').click();
                     $('option=62.5Hz').click();
@@ -765,15 +796,13 @@ describe('device integration', () => {
                     assert(studioUrl, 'studioUrl should not be empty');
                     browser.url(studioUrl + 'acquisition/testing');
 
-                    browser.waitUntil(() => $$('#input-sample-sensor option').length === 2,
+                    browser.waitUntil(() => $$('#input-sample-sensor option').length >= expectedSensorCount,
                         { timeout: 2000 });
-
-                    assert.equal($$('#input-sample-sensor option').length, 2);
 
                     $('#input-category').setValue(label);
                     $('#input-sample-length').setValue(1000);
                     $('#input-sample-sensor').click();
-                    $('option=Built-in accelerometer').click();
+                    $('option=' + accelerometerName).click();
 
                     $('#input-sample-frequency').click();
                     $('option=62.5Hz').click();
@@ -848,17 +877,24 @@ describe('device integration', () => {
         });
 
         describe('microphone', () => {
+            before(function() {
+                if (!microphone) {
+                    this.skip();
+                }
+            });
+
             describe('training data', () => {
                 it('shows data posted by the ingestion API', () => {
                     assert(studioUrl, 'studioUrl should not be empty');
                     browser.url(studioUrl + 'acquisition/training');
 
-                    assert.equal($$('#input-sample-sensor option').length, 2);
+                    browser.waitUntil(() => $$('#input-sample-sensor option').length >= expectedSensorCount,
+                        { timeout: 2000 });
 
                     $('#input-category').setValue(label);
                     $('#input-sample-length').setValue(1000);
                     $('#input-sample-sensor').click();
-                    $('option=Built-in microphone').click();
+                    $('option=' + microphoneName).click();
 
                     $('#input-start-sampling').click();
 
@@ -933,12 +969,13 @@ describe('device integration', () => {
                     assert(studioUrl, 'studioUrl should not be empty');
                     browser.url(studioUrl + 'acquisition/testing');
 
-                    assert.equal($$('#input-sample-sensor option').length, 2);
+                    browser.waitUntil(() => $$('#input-sample-sensor option').length >= expectedSensorCount,
+                        { timeout: 2000 });
 
                     $('#input-category').setValue(label);
                     $('#input-sample-length').setValue(1000);
                     $('#input-sample-sensor').click();
-                    $('option=Built-in microphone').click();
+                    $('option=' + microphoneName).click();
 
                     $('#input-start-sampling').click();
 

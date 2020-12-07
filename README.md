@@ -16,6 +16,7 @@ This contains device integration tests for the Edge Impulse [remote management](
 
     ```
     $ npm install
+    $ npm install chromedriver@latest
     ```
 
 1. Run the tests:
@@ -29,6 +30,8 @@ This contains device integration tests for the Edge Impulse [remote management](
         EI_TESTWIFI=1 \
         SELENIUM_WIFI_SSID="xxx" \
         SELENIUM_WIFI_PASSWORD="xxx" \
+        TEST_ACCELEROMETER=1 \
+        TEST_MICROPHONE=1 \
         ./node_modules/.bin/wdio wdio.headless.chrome.js
     ```
 
@@ -41,6 +44,10 @@ This contains device integration tests for the Edge Impulse [remote management](
     * `EI_TESTWIFI` - whether to test WiFi connection.
     * `SELENIUM_WIFI_SSID` - if WiFi was enabled, the SSID of the network.
     * `SELENIUM_WIFI_PASSWORD` - if WiFi was enabled, the SSID of the network.
+    * `TEST_ACCELEROMETER` - whether to test the accelerometer.
+    * `TEST_MICROPHONE` whether to test the microphone.
+    * `ACCELEROMETER_SENSOR_NAME` - name of the accelerometer sensor (default: 'Built-in accelerometer').
+    * `MICROPHONE_SENSOR_NAME` - name of the microphone sensor (default: 'Built-in microphone').
 
 1. This yields a test report:
 
@@ -145,5 +152,7 @@ The default driver is Chrome, but you can also use Firefox via:
     EI_TESTWIFI=1 \
     SELENIUM_WIFI_SSID="xxx" \
     SELENIUM_WIFI_PASSWORD="xxx" \
+    TEST_ACCELEROMETER=1 \
+    TEST_MICROPHONE=1 \
     ./node_modules/.bin/wdio wdio.headless.firefox.js
 ```
