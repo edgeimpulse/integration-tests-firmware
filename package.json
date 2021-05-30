@@ -36,7 +36,7 @@
     "wdio-chromedriver-service": "^6.0.3",
     "wdio-geckodriver-service": "^1.0.3",
     "webdriverio": "^6.1.17",
-    "ws": "^7.2.0"
+    "ws": "^7.4.6"
   },
   "devDependencies": {
     "@types/cbor": "^5.0.0",
