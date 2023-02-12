@@ -18,8 +18,8 @@
   },
   "homepage": "https://github.com/edgeimpulse/integration-tests-firmware#readme",
   "dependencies": {
-    "@wdio/cli": "^6.1.17",
-    "@wdio/local-runner": "^6.1.17",
+    "@wdio/cli": "^8.3.5",
+    "@wdio/local-runner": "^8.3.5",
     "@wdio/mocha-framework": "^6.1.17",
     "@wdio/selenium-standalone-service": "^6.1.14",
     "@wdio/spec-reporter": "^6.1.14",
@@ -35,7 +35,7 @@
     "unzipper": "^0.10.8",
     "wdio-chromedriver-service": "^6.0.3",
     "wdio-geckodriver-service": "^1.0.3",
-    "webdriverio": "^6.1.17",
+    "webdriverio": "^8.3.5",
     "ws": "^7.2.0"
   },
   "devDependencies": {
